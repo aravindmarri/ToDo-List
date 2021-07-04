@@ -1,0 +1,93 @@
+$todo-background: #ddfff7;
+$todo-border: #93e1d8;
+$todo-lite: #ffa69e;
+$todo-button: #aa4465;
+$todo-main: #462255;
+
+.todo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  .container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .input-form {
+      display: flex;
+      .mat-form-field {
+        width: 100%;
+
+      }
+      ::ng-deep .mat-form-field-wrapper{
+        padding: 0;
+        margin-right: 20px;
+      }
+    }
+    .add-task-button{
+      height: 63.5px;
+      border-radius: 50%;
+    }
+
+    .task-list {
+      .task-card {
+        margin: 10px 0;
+        padding: 10px;
+        box-shadow: 0 2px 1px 0 rgb(0 0 0 / 20%);
+        border: 2px solid transparent;
+        background-color: #ddfff7;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        &:hover {
+          border-color: $todo-border;
+        }
+
+        .icon-with-taskname {
+          display: flex;
+          align-items: center;
+        }
+
+        .task-check {
+          width: 40px;
+          height: 40px;
+          font-size: 24px;
+          color: $todo-button;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .task-name {
+          margin: 0;
+          padding: 0 10px;
+          font: normal 500 24px/27px 'Reenie Beanie';
+        }
+
+        .task-flag {
+          color: $todo-button;
+        }
+      }
+    }
+  }
+}
+.container-padding{
+  padding: 25px;
+}
+@media (max-width: 859px){
+  .container{
+    width: 100%!important;
+  }
+}
+@media (max-width: 599px) {
+  .container-padding{
+    padding: 16px;
+  }
+}
+

@@ -1,0 +1,41 @@
+Values in todo :
+private values: Values[] = [
+      new Values(
+        'Tasty Schnitzel',
+        'A super-tasty Schnitzel - just awesome!',
+        false
+      ),
+      new Values(
+        'Big Fat Burger',
+        'What else you need to say?',
+        false
+      )
+    ];
+OnSubmit button
+  // onSubmit(newThing: HTMLInputElement, newDisc: HTMLInputElement): void {
+  //   if (this.todoArray.toString().toLowerCase().includes(newThing.value.toLowerCase())) {
+  //     alert('Your next task is already added');
+  //     this.youCanTAdd = !this.youCanTAdd;
+  //   } else {
+  //     // this.todoArray.push(newThing.value, newDisc.value, this.taskDone);
+  //     this.todoArray.addToList();
+  //     console.log(this.todoArray);
+  //   }
+  //   addToList(val: Values) {
+  //     this.values.push(val);
+  //     this.recipesChanged.next(this.todoArray.slice());
+  //   }
+  // }
+  model
+  export class Values {
+    public name: string;
+    public description: string;
+    public check : boolean;
+    constructor(name: string, desc: string, check: boolean) {
+      this.name = name;
+      this.description = desc;
+      this.check = check;
+    }
+  }
+Links :
+https://dribbble.com/shots/9108433-Task-manager-mobile-app-interaction

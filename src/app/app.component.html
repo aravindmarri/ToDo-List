@@ -1,0 +1,42 @@
+<!--<div class="main-content">-->
+<!--  <h1>{{title | titlecase}}</h1>-->
+<!--  <form-->
+<!--    [formGroup]="todoForm"-->
+<!--    (ngSubmit)="onSubmit()">-->
+<!--    <mat-form-field appearance="outline">-->
+<!--      <mat-label>What to do</mat-label>-->
+<!--      <input matInput placeholder="Enter your event" type="text"-->
+<!--             id="name"-->
+<!--             formControlName="name"-->
+<!--             class="form-control"-->
+<!--             required>-->
+<!--    </mat-form-field>-->
+<!--    <br>-->
+<!--    <mat-form-field appearance="outline">-->
+<!--    <mat-label>What to do</mat-label>-->
+<!--    <input matInput placeholder="Enter your event"-->
+<!--           type="text"-->
+<!--           id="description"-->
+<!--           class="form-control"-->
+<!--           formControlName="description"-->
+<!--           rows="6"-->
+<!--           required>-->
+<!--    </mat-form-field>-->
+<!--    <br>-->
+<!--    <button mat-stroked-button color="warn" type="submit"-->
+<!--            [disabled]="!todoForm.valid"-->
+<!--    > Save</button>-->
+<!--  </form>-->
+<!--  <div class="task-display">-->
+<!--    <ul *ngFor="let i of todoArray">-->
+<!--      <li class="list-item">-->
+<!--        <section class="example-section">-->
+<!--          <mat-checkbox class="example-margin" [checked]= "taskDone"><p [ngStyle]="{'text-decoration':(taskDone)? 'line-through': 'none'}">{{i}}</p></mat-checkbox>-->
+<!--&lt;!&ndash;          (i.length>30)? (i | slice:0:30)+'...':(i)&ndash;&gt;-->
+<!--        </section>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</div>-->
+
+<app-todo-entry></app-todo-entry>

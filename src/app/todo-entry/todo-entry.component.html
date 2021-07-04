@@ -1,0 +1,43 @@
+<section class="todo-section">
+  <h2>ToDo App</h2>
+  <div class="container">
+    <div class="task-list container-padding">
+      <div *ngFor="let item of items | async">
+        <div class="task-card">
+          <div class="icon-with-taskname" for="check">
+            <mat-checkbox [ngModel]="item.check" class="task-check" id="check" (click)="checkChange(item.key, item.check)"></mat-checkbox>
+            <p class="task-name" >{{ item.name }}</p>
+          </div>
+          <button mat-icon-button class="task-flag"(click)="flagChange(item.key, item.flag)" aria-label="Task is important" >
+            <mat-icon *ngIf="item.flag; else noFalg">grade</mat-icon>
+            <ng-template #noFalg>
+              <mat-icon>star_border</mat-icon>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="input-form container-padding">
+      <mat-form-field appearance="outline">
+        <mat-label>What to do Next</mat-label>
+        <input matInput placeholder="Enter you Task here..."
+               id="name"
+               name="name"
+               class="input-task"
+               type="text"
+               [(ngModel)]="name"
+               required/>
+        <!--        <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" (click)="toggleFlag()">-->
+        <!--          <span class="material-icons">{{flagName}}</span>-->
+        <!--        </button>-->
+      </mat-form-field>
+      <div class="buttons-container">
+        <button class="add-task-button" mat-button mat-raised-button type="submit" (click)="submit()"><span class="material-icons-outlined">add_task</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

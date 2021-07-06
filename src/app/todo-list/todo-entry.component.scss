@@ -18,21 +18,25 @@ $todo-main: #462255;
 
     .input-form {
       display: flex;
+
       .mat-form-field {
         width: 100%;
 
       }
-      ::ng-deep .mat-form-field-wrapper{
+
+      ::ng-deep .mat-form-field-wrapper {
         padding: 0;
         margin-right: 20px;
       }
     }
-    .add-task-button{
+
+    .add-task-button {
       height: 63.5px;
       border-radius: 50%;
     }
 
     .task-list {
+      list-style-type: none;
       .task-card {
         margin: 10px 0;
         padding: 10px;
@@ -67,7 +71,7 @@ $todo-main: #462255;
         .task-name {
           margin: 0;
           padding: 0 10px;
-          font: normal 500 24px/27px 'Reenie Beanie';
+          font: normal 500 24px/27px;
         }
 
         .task-flag {
@@ -77,16 +81,19 @@ $todo-main: #462255;
     }
   }
 }
-.container-padding{
+
+.container-padding {
   padding: 25px;
 }
-@media (max-width: 859px){
-  .container{
-    width: 100%!important;
+
+@media (max-width: 859px) {
+  .container {
+    width: 100% !important;
   }
 }
+
 @media (max-width: 599px) {
-  .container-padding{
+  .container-padding {
     padding: 16px;
   }
 }

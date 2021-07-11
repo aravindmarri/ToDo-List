@@ -1,11 +1,11 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {Values} from '../values.model';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {query, style, transition, trigger, stagger, animate} from '@angular/animations';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
+import {TaskData} from 'src/app/task-data';
 
 @Component({
   selector: 'app-todo-entry',
@@ -25,6 +25,8 @@ export class TodoEntryComponent implements OnInit {
   flagValue = false;
   color = '#aa4465';
   flagName = 'star_border';
+  newTaskName = '';
+  newTaskDescription = '';
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.itemsRef = db.list('Tasks');
@@ -36,27 +38,19 @@ export class TodoEntryComponent implements OnInit {
     );
   }
 
-  addItem(taskName: string, taskCheck: boolean, taskFalg: boolean): void {
-    this.itemsRef.push({name: taskName, check: taskCheck, flag: taskFalg});
+  addItem(taskName: string, taskDescription: string): void {
+    this.itemsRef.push({name: taskName, description: taskDescription, check: false, flag: false});
   }
 
   submit(): void {
-    this.dialog.open(AddtaskComponent, {
-      data: { name: this.name, description: this.description}
-    }).afterClosed().subscribe((response) => {
-      console.log(response);
+    const dialogRef = this.dialog.open(AddtaskComponent, {
+      width: '250px',
+      data: {name: this.newTaskName, description: this.newTaskDescription}
     });
-    // const dialogRef = this.dialog.open(AddtaskComponent, {
-    //   width: '300px',
-    //   data: {name: this.name, description: this.description}
-    // });
-    // dialogRef.afterClosed().subscribe((res) => {
-    //   console.log(res);
-    //   // this.name = result;
-    //   // this.description = result;
-    // });
-    console.log(this.name, this.check, this.flagValue);
-    // this.addItem(this.name, this.check, this.flagValue);
+
+    dialogRef.afterClosed().subscribe(newData => {
+      this.addItem(newData.name, newData.description);
+    });
   }
 
   checkChange(key: string, isCheck: boolean): void {
@@ -70,5 +64,13 @@ export class TodoEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.renderCounter();
+  }
+
+  renderCounter(): void {
+    setTimeout(
+      () => {
+        alert('for display message');
+      }, 3000);
   }
 }

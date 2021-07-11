@@ -48,6 +48,7 @@ import { AddtaskComponent } from './todo-list/addtask/addtask.component';
     AngularFirestoreModule
   ],
   providers: [AngularFireModule],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddtaskComponent]
 })
 export class AppModule { }

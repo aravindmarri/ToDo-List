@@ -4,11 +4,13 @@
     <ul class="task-list container-padding">
       <li class="item-list" *ngFor="let item of items | async">
         <div class="task-card">
-          <div class="icon-with-taskname" >
-            <mat-checkbox [ngModel]="item.check" class="task-check" id="check" (click)="checkChange(item.key, item.check)"></mat-checkbox>
+          <div class="icon-with-taskname">
+            <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
+                          (click)="checkChange(item.key, item.check)"></mat-checkbox>
             <label class="task-name" for="check">{{ item.name }}</label>
           </div>
-          <button mat-icon-button class="task-flag"(click)="flagChange(item.key, item.flag)" aria-label="Task is important" >
+          <button mat-icon-button class="task-flag" (click)="flagChange(item.key, item.flag)"
+                  aria-label="Task is important">
             <mat-icon *ngIf="item.flag; else noFalg">grade</mat-icon>
             <ng-template #noFalg>
               <mat-icon>star_border</mat-icon>
@@ -17,24 +19,18 @@
         </div>
       </li>
     </ul>
-    <div class="input-form container-padding">
-      <mat-form-field appearance="outline">
-        <mat-label>What to do Next</mat-label>
-        <input matInput placeholder="Enter you Task here..."
-               id="name"
-               name="name"
-               class="input-task"
-               type="text"
-               [(ngModel)]="name"
-               required/>
-      </mat-form-field>
-      <div class="buttons-container">
-        <button class="add-task-button" mat-button mat-raised-button type="submit" (click)="submit()"><span class="material-icons-outlined">add_task</span>
+    <div class="input-form">
+      <div class="reminder-container" style="display: none">
+        <div class="reminder-text absolute">
+          <p>By pressing this icon you can able to add your tasks</p>
+        </div>
+        <img class="absolute reminder-svg" src="assets/arrow.svg">
+      </div>
+      <div class="buttons-container absolute container-padding">
+        <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="submit()">
+          <span class="material-icons-outlined">add_task</span>
         </button>
       </div>
     </div>
   </div>
-  <h1>{{description}}</h1>
-  <h1>{{name}}</h1>
-
 </section>

@@ -1,7 +1,8 @@
 import {Component, Injectable, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Values} from './values.model';
+import { NewTask } from './values.model';
 import { Subject } from 'rxjs';
+import { TaskData } from 'src/app/task-data';
 
 @Component({
   selector: 'app-root',
@@ -15,20 +16,8 @@ export class AppComponent {
   desc = '';
   youCanTAdd = false;
   taskDone = false;
-  todoArray: Values[] = [];
-  valuesChanged = new Subject<Values[]>();
-  private values: Values[] = [
-      new Values(
-        'Tasty Schnitzel',
-        false,
-        false
-      ),
-      new Values(
-        'Big Fat Burger',
-        false,
-        false
-      )
-    ];
+  todoArray: TaskData[] = [];
+  valuesChanged = new Subject<TaskData[]>();
   // onSubmit(newThing: HTMLInputElement, newDisc: HTMLInputElement): void {
   //   if (this.todoArray.toString().toLowerCase().includes(newThing.value.toLowerCase())) {
   //     alert('Your next task is already added');

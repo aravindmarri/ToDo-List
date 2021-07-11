@@ -1,17 +1,17 @@
 <h1 mat-dialog-title>Please add your Task</h1>
 <div mat-dialog-content>
   <p>Next To-Do</p>
-  <form (ngSubmit)="addTast()" #newTask="ngForm">
+  <form (ngSubmit)="addTask()" #newTask="ngForm">
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Name here...</mat-label>
-      <input matInput [(ngModel)]="data.name" id="name"
+      <input matInput [(ngModel)]="taskdata.name" id="name"
              name="name"
              type="text"
              required>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Description here...</mat-label>
-      <input matInput [(ngModel)]="data.description"
+      <input matInput [(ngModel)]="taskdata.description"
              id="description"
              name="description"
              type="text">
@@ -20,7 +20,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial [mat-dialog-close]="data" (click)="addTast()"
+  <button mat-button [mat-dialog-close]="taskdata" cdkFocusInitial [mat-dialog-close]="taskdata" (click)="addTask()"
           [disabled]="!newTask.form.valid">Add
   </button>
 </div>

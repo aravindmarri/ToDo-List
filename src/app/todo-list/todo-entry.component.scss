@@ -18,25 +18,42 @@ $todo-main: #462255;
 
     .input-form {
       display: flex;
+      width: min-content;
 
-      .mat-form-field {
-        width: 100%;
-
+      .reminder-container {
+        .reminder-text{
+          bottom: 185px;
+          right: 20px;
+          width: 200px;
+          border-radius: 20px;
+          padding: 15px;
+          text-align: center;
+          background: $todo-background;
+        }
+        .reminder-svg {
+          bottom: 30px;
+          right: 100px;
+        }
       }
 
-      ::ng-deep .mat-form-field-wrapper {
-        padding: 0;
-        margin-right: 20px;
-      }
-    }
+      .buttons-container {
+        bottom: 0;
+        right: 0;
+        .add-task-button {
+          height: 64px;
+          border-radius: 50%;
+        }
 
-    .add-task-button {
-      height: 63.5px;
-      border-radius: 50%;
+        .mat-addTask {
+          background-color: $todo-button;
+          color: $todo-background;
+        }
+      }
     }
 
     .task-list {
       list-style-type: none;
+
       .task-card {
         margin: 10px 0;
         padding: 10px;
@@ -86,6 +103,10 @@ $todo-main: #462255;
   padding: 25px;
 }
 
+.absolute {
+  position: absolute;
+}
+
 @media (max-width: 859px) {
   .container {
     width: 100% !important;
@@ -95,6 +116,12 @@ $todo-main: #462255;
 @media (max-width: 599px) {
   .container-padding {
     padding: 16px;
+  }
+  .reminder-text{
+    bottom: 125px !important;
+  }
+  .reminder-svg{
+    width: 200px;
   }
 }
 

@@ -20,7 +20,7 @@
       </li>
     </ul>
     <div class="input-form">
-      <div class="reminder-container" style="display: none">
+      <div class="reminder-container" style="display: none" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
         <div class="reminder-text absolute">
           <p>By pressing this icon you can able to add your tasks</p>
         </div>

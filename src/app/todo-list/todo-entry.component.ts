@@ -22,6 +22,9 @@ export class TodoEntryComponent implements OnInit {
   description = '';
   name = '';
   check = false;
+  taskTry = false;
+  displayTry = false;
+  stopDisplayTry = false;
   flagValue = false;
   color = '#aa4465';
   flagName = 'star_border';
@@ -43,6 +46,8 @@ export class TodoEntryComponent implements OnInit {
   }
 
   submit(): void {
+    this.taskTry = true;
+    console.log(this.taskTry);
     const dialogRef = this.dialog.open(AddtaskComponent, {
       width: '250px',
       data: {name: this.newTaskName, description: this.newTaskDescription}
@@ -70,7 +75,17 @@ export class TodoEntryComponent implements OnInit {
   renderCounter(): void {
     setTimeout(
       () => {
-        alert('for display message');
-      }, 3000);
+        if (!this.taskTry) {
+          this.displayTry = !this.displayTry;
+          this.stopDisplayTry = true;
+          this.taskTry = !this.taskTry;
+        }
+      }, 10000);
+    setTimeout(
+      () => {
+        if (this.stopDisplayTry && this.displayTry && this.taskTry) {
+          this.displayTry = !this.displayTry;
+        }
+      }, 30000);
   }
 }

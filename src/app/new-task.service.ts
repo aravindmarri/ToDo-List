@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from './task';
+import {TaskData} from 'src/app/task-data';
 import { NewTask } from './values.model';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { NewTask } from './values.model';
 export class NewTaskService {
 
   constructor() { }
-  getNewTask(): Task[] {
+  getNewTask(): TaskData[] {
     return NewTask;
   }
 }

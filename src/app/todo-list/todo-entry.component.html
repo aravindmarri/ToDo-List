@@ -7,26 +7,23 @@
           <div class="icon-with-taskname">
             <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
                           (click)="checkChange(item.key, item.check)"></mat-checkbox>
-            <label class="task-name" for="check">{{ item.name }}</label>
+            <div class="name-desc-container" for="check">
+              <p class="task-name">{{ item.name }}</p>
+              <p class="task-description">{{ item.description }}</p>
+            </div>
           </div>
-          <button mat-icon-button class="task-flag" (click)="flagChange(item.key, item.flag)"
-                  aria-label="Task is important">
-            <mat-icon *ngIf="item.flag; else noFalg">grade</mat-icon>
-            <ng-template #noFalg>
-              <mat-icon>star_border</mat-icon>
-            </ng-template>
-          </button>
+          <p class="task-date">{{item.date | date:'MMM d'}}</p>
         </div>
       </li>
     </ul>
     <div class="input-form">
       <div class="reminder-container" style="display: none" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
-        <div class="reminder-text absolute">
+        <div class="reminder-text pos-fix">
           <p>By pressing this icon you can able to add your tasks</p>
         </div>
-        <img class="absolute reminder-svg" src="assets/arrow.svg">
+        <img class="reminder-svg pos-fix" src="assets/arrow.svg">
       </div>
-      <div class="buttons-container absolute container-padding">
+      <div class="buttons-container container-padding pos-fix">
         <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="submit()">
           <span class="material-icons-outlined">add_task</span>
         </button>

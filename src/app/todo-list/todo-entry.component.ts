@@ -25,11 +25,10 @@ export class TodoEntryComponent implements OnInit {
   taskTry = false;
   displayTry = false;
   stopDisplayTry = false;
-  flagValue = false;
   color = '#aa4465';
-  flagName = 'star_border';
   newTaskName = '';
   newTaskDescription = '';
+  todayString: string = new Date().toDateString();
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.itemsRef = db.list('Tasks');
@@ -41,8 +40,8 @@ export class TodoEntryComponent implements OnInit {
     );
   }
 
-  addItem(taskName: string, taskDescription: string): void {
-    this.itemsRef.push({name: taskName, description: taskDescription, check: false, flag: false});
+  addItem(taskName: string, taskDescription: string, todayString: string): void {
+    this.itemsRef.push({name: taskName, description: taskDescription, check: false, date: todayString});
   }
 
   submit(): void {
@@ -54,7 +53,7 @@ export class TodoEntryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newData => {
-      this.addItem(newData.name, newData.description);
+      this.addItem(newData.name, newData.description, this.todayString);
     });
   }
 
@@ -62,14 +61,12 @@ export class TodoEntryComponent implements OnInit {
     this.itemsRef.update(key, {check: !isCheck});
   }
 
-  flagChange(key: string, isCheck: boolean): void {
-    setTimeout(() => {
-      this.itemsRef.update(key, {flag: !isCheck});
-    }, 100);
-  }
-
   ngOnInit(): void {
     this.renderCounter();
+    this.setDate();
+  }
+  setDate(): void {
+    console.log(this.todayString);
   }
 
   renderCounter(): void {

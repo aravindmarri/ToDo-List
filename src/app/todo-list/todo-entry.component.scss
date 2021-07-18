@@ -21,7 +21,7 @@ $todo-main: #462255;
       width: min-content;
 
       .reminder-container {
-        .reminder-text{
+        .reminder-text {
           bottom: 90px;
           right: 75px;
           width: 200px;
@@ -30,6 +30,7 @@ $todo-main: #462255;
           text-align: center;
           background: $todo-background;
         }
+
         .reminder-svg {
           bottom: 93px;
           height: 30px;
@@ -57,9 +58,9 @@ $todo-main: #462255;
       list-style-type: none;
 
       .task-card {
-        margin: 10px 0;
+        margin: 15px 0;
         padding: 10px;
-        box-shadow: 0 2px 1px 0 rgb(0 0 0 / 20%);
+        box-shadow: 0 10px 10px 0 rgb(0 0 0 / 5%);
         border: 2px solid transparent;
         background-color: #ddfff7;
         border-radius: 10px;
@@ -87,20 +88,28 @@ $todo-main: #462255;
           justify-content: center;
         }
 
-        .task-name {
-          margin: 0;
-          padding: 0 10px;
-          font: normal 500 24px/27px;
-        }
+        .name-desc-container {
+          padding: 0 0 0 10px;
+          .task-name {
+            margin: 0;
+            font: normal 700 18px/27px poppins;
+          }
 
-        .task-flag {
-          color: $todo-button;
+          .task-description {
+            margin: 0;
+            font: normal 300 14px/20px poppins;
+          }
+        }
+        .task-date{
+          transform: rotate(-90deg);
         }
       }
     }
   }
 }
-
+.pos-fix{
+  position: fixed;
+}
 .container-padding {
   padding: 25px;
 }
@@ -119,10 +128,10 @@ $todo-main: #462255;
   .container-padding {
     padding: 16px;
   }
-  .reminder-text{
+  .reminder-text {
     bottom: 75px !important;
   }
-  .reminder-svg{
+  .reminder-svg {
     width: 200px;
   }
 }

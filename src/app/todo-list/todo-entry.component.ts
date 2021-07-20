@@ -29,6 +29,7 @@ export class TodoEntryComponent implements OnInit {
   newTaskName = '';
   newTaskDescription = '';
   todayString: string = new Date().toDateString();
+  SWIPE_ACTION = {LEFT: 'swipeleft', RIGHT: 'swiperight'};
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.itemsRef = db.list('Tasks');
@@ -65,6 +66,7 @@ export class TodoEntryComponent implements OnInit {
     this.renderCounter();
     this.setDate();
   }
+
   setDate(): void {
     console.log(this.todayString);
   }
@@ -84,5 +86,15 @@ export class TodoEntryComponent implements OnInit {
           this.displayTry = !this.displayTry;
         }
       }, 30000);
+  }
+
+  swipe(currentIndex: number, action = this.SWIPE_ACTION.RIGHT, KeyVal: string): void {
+    if (action === this.SWIPE_ACTION.RIGHT) {
+      this.itemsRef.remove(KeyVal).then(r =>
+        console.log('deleted'));
+    }
+    if (action === this.SWIPE_ACTION.LEFT) {
+      alert('Swiped left side' + KeyVal);
+    }
   }
 }

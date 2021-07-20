@@ -2,7 +2,8 @@
   <h2>ToDo App</h2>
   <div class="container">
     <ul class="task-list container-padding">
-      <li class="item-list" *ngFor="let item of items | async">
+      <li class="item-list" *ngFor="let item of items | async ; let i=index"
+          (swipeleft)="swipe(i, $event.type, item.key)" (swiperight)="swipe(i, $event.type, item.key)" >
         <div class="task-card">
           <div class="icon-with-taskname">
             <mat-checkbox [ngModel]="item.check" class="task-check" id="check"

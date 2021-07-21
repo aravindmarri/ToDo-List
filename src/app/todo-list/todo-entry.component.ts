@@ -2,16 +2,41 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {query, style, transition, trigger, stagger, animate} from '@angular/animations';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
-import {TaskData} from 'src/app/task-data';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-todo-entry',
   templateUrl: './todo-entry.component.html',
   styleUrls: ['./todo-entry.component.scss'],
-  animations: []
+  animations: [
+    // trigger('enabledStateChange', [
+    //   state(
+    //     'default',
+    //     style({
+    //       opacity: 1,
+    //     })
+    //   ),
+    //   state(
+    //     'disabled',
+    //     style({
+    //       opacity: 0.5,
+    //     })
+    //   ),
+    //   transition('* => *', animate('300ms ease-out')),
+    // ])
+
+    trigger('fadeSlideInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('500ms', style({ opacity: 1, transform: 'translateX(0)' })),
+      ]),
+      transition(':leave', [
+        animate('1000ms', style({ opacity: 0, transform: 'translateX(-30px)' })),
+      ]),
+    ]),
+  ]
 })
 
 @Injectable()
@@ -89,12 +114,12 @@ export class TodoEntryComponent implements OnInit {
   }
 
   swipe(currentIndex: number, action = this.SWIPE_ACTION.RIGHT, KeyVal: string): void {
-    if (action === this.SWIPE_ACTION.RIGHT) {
+    if (action === this.SWIPE_ACTION.LEFT) {
       this.itemsRef.remove(KeyVal).then(r =>
         console.log('deleted'));
     }
-    if (action === this.SWIPE_ACTION.LEFT) {
-      alert('Swiped left side' + KeyVal);
+    if (action === this.SWIPE_ACTION.RIGHT) {
+      alert('Swiped right side' + KeyVal);
     }
   }
 }

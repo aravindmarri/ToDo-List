@@ -42,6 +42,7 @@ $todo-main: #462255;
       .buttons-container {
         bottom: 0;
         right: 0;
+
         .add-task-button {
           height: 64px;
           border-radius: 50%;
@@ -58,11 +59,10 @@ $todo-main: #462255;
       list-style-type: none;
 
       .task-card {
-        margin: 15px 0;
+        margin: 10px 0;
         padding: 10px;
         box-shadow: 0 10px 10px 0 rgb(0 0 0 / 5%);
         border: 2px solid transparent;
-        background-color: #ddfff7;
         border-radius: 10px;
         display: flex;
         flex-direction: row;
@@ -79,7 +79,7 @@ $todo-main: #462255;
         }
 
         .task-check {
-          width: 40px;
+          min-width: 40px;
           height: 40px;
           font-size: 24px;
           color: $todo-button;
@@ -89,7 +89,9 @@ $todo-main: #462255;
         }
 
         .name-desc-container {
+          width: 80%;
           padding: 0 0 0 10px;
+
           .task-name {
             margin: 0;
             font: normal 700 18px/27px poppins;
@@ -100,16 +102,21 @@ $todo-main: #462255;
             font: normal 300 14px/20px poppins;
           }
         }
-        .task-date{
+
+        .task-date {
           transform: rotate(-90deg);
+          white-space: nowrap;
         }
       }
+
     }
   }
 }
-.pos-fix{
+
+.pos-fix {
   position: fixed;
 }
+
 .container-padding {
   padding: 25px;
 }
@@ -136,3 +143,14 @@ $todo-main: #462255;
   }
 }
 
+.item-list:nth-child(odd) {
+  .task-card {
+    background: url("../../assets/card-bg-odd.svg") no-repeat bottom right #ddfff7;
+  }
+}
+
+.item-list:nth-child(even) {
+  .task-card {
+    background: url("../../assets/card-bg-even.svg") no-repeat top right #ddfff7;
+  }
+}

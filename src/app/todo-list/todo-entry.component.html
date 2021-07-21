@@ -3,14 +3,14 @@
   <div class="container">
     <ul class="task-list container-padding">
       <li class="item-list" *ngFor="let item of items | async ; let i=index"
-          (swipeleft)="swipe(i, $event.type, item.key)" (swiperight)="swipe(i, $event.type, item.key)" >
+          (swipeleft)="swipe(i, $event.type, item.key)" (swiperight)="swipe(i, $event.type, item.key)" @fadeSlideInOut>
         <div class="task-card">
           <div class="icon-with-taskname">
             <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
                           (click)="checkChange(item.key, item.check)"></mat-checkbox>
             <div class="name-desc-container" for="check">
-              <p class="task-name">{{ item.name }}</p>
-              <p class="task-description">{{ item.description }}</p>
+              <p class="task-name" style="height: 27px;" ellipsis>{{ item.name }}</p>
+              <p class="task-description" style="max-height: 60px;" ellipsis [ellipsis-content]="item.description"></p>
             </div>
           </div>
           <p class="task-date">{{item.date | date:'MMM d'}}</p>
@@ -19,7 +19,7 @@
     </ul>
     <div class="input-form">
       <div class="reminder-container" style="display: none" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
-        <div class="reminder-text pos-fix">
+        <div class="reminder-text pos-fix" >
           <p>By pressing this icon you can able to add your tasks</p>
         </div>
         <img class="reminder-svg pos-fix" src="assets/arrow.svg">

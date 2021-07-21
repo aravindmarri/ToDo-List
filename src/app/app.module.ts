@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AddtaskComponent} from './todo-list/addtask/addtask.component';
+import {EllipsisModule} from 'ngx-ellipsis';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -51,7 +52,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    HammerModule
+    HammerModule,
+    EllipsisModule
   ],
   providers: [AngularFireModule, {
     provide: HAMMER_GESTURE_CONFIG,

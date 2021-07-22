@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {trigger, state, style, animate, transition, query, stagger} from '@angular/animations';
 
 @Component({
   selector: 'app-todo-entry',
@@ -26,16 +26,32 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     //   ),
     //   transition('* => *', animate('300ms ease-out')),
     // ])
+    //
+    // trigger('fadeSlideInOut', [
+    //   transition(':enter', [
+    //     style({opacity: 0, transform: 'translateY(10px)'}),
+    //     animate('500ms', style({opacity: 1, transform: 'translateX(0)'})),
+    //   ]),
+    //   transition(':leave', [
+    //     animate('1000ms', style({opacity: 0, transform: 'translateX(-30px)'})),
+    //   ]),
+    // ]),
+    trigger('listAnimation', [
+      transition('* => *', [ // each time the binding value changes
+        query(':leave', [
+          stagger(100, [
+            animate('0.5s', style({opacity: 0}))
+          ])
+        ]),
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ])
+      ])
+    ])
 
-    trigger('fadeSlideInOut', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('500ms', style({ opacity: 1, transform: 'translateX(0)' })),
-      ]),
-      transition(':leave', [
-        animate('1000ms', style({ opacity: 0, transform: 'translateX(-30px)' })),
-      ]),
-    ]),
   ]
 })
 
@@ -50,11 +66,13 @@ export class TodoEntryComponent implements OnInit {
   taskTry = false;
   displayTry = false;
   stopDisplayTry = false;
+  backTransform = true;
   color = '#aa4465';
   newTaskName = '';
   newTaskDescription = '';
   todayString: string = new Date().toDateString();
-  SWIPE_ACTION = {LEFT: 'swipeleft', RIGHT: 'swiperight'};
+  leftIndex = 1000;
+  rightIndex = 1000;
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.itemsRef = db.list('Tasks');
@@ -113,13 +131,26 @@ export class TodoEntryComponent implements OnInit {
       }, 30000);
   }
 
-  swipe(currentIndex: number, action = this.SWIPE_ACTION.RIGHT, KeyVal: string): void {
-    if (action === this.SWIPE_ACTION.LEFT) {
-      this.itemsRef.remove(KeyVal).then(r =>
-        console.log('deleted'));
+  panleft(currentIndex: number, evt: any): void {
+    this.leftIndex = currentIndex;
+    console.log(evt);
+    this.backTransform = true;
+  }
+
+  panright(currentIndex: number, evt: any): void {
+    this.rightIndex = currentIndex + 1001 ;
+    console.log(evt, this.backTransform);
+    this.styleObject(currentIndex + 1001);
+    this.backTransform = false;
+  }
+
+  styleObject(currentIndex: number): object | any {
+    if (this.leftIndex === currentIndex  && this.backTransform) {
+
+      return {transform: 'translate3d(-64px, 0px, 0px)'};
     }
-    if (action === this.SWIPE_ACTION.RIGHT) {
-      alert('Swiped right side' + KeyVal);
+    else{
+      return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
 }

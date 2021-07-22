@@ -1,9 +1,10 @@
 <section class="todo-section">
   <h2>ToDo App</h2>
   <div class="container">
-    <ul class="task-list container-padding">
-      <li class="item-list" *ngFor="let item of items | async ; let i=index"
-          (swipeleft)="swipe(i, $event.type, item.key)" (swiperight)="swipe(i, $event.type, item.key)" @fadeSlideInOut>
+    <ul class="task-list container-padding" >
+      <li (panleft)="panleft(i, $event.type)" (panright)="panright(i, $event.type)"
+          *ngFor="let item of items | async ; let i=index" [ngStyle]=styleObject(i)
+          class="item-list">
         <div class="task-card">
           <div class="icon-with-taskname">
             <mat-checkbox [ngModel]="item.check" class="task-check" id="check"

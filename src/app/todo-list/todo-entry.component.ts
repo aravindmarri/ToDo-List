@@ -11,31 +11,6 @@ import {trigger, state, style, animate, transition, query, stagger} from '@angul
   templateUrl: './todo-entry.component.html',
   styleUrls: ['./todo-entry.component.scss'],
   animations: [
-    // trigger('enabledStateChange', [
-    //   state(
-    //     'default',
-    //     style({
-    //       opacity: 1,
-    //     })
-    //   ),
-    //   state(
-    //     'disabled',
-    //     style({
-    //       opacity: 0.5,
-    //     })
-    //   ),
-    //   transition('* => *', animate('300ms ease-out')),
-    // ])
-    //
-    // trigger('fadeSlideInOut', [
-    //   transition(':enter', [
-    //     style({opacity: 0, transform: 'translateY(10px)'}),
-    //     animate('500ms', style({opacity: 1, transform: 'translateX(0)'})),
-    //   ]),
-    //   transition(':leave', [
-    //     animate('1000ms', style({opacity: 0, transform: 'translateX(-30px)'})),
-    //   ]),
-    // ]),
     trigger('listAnimation', [
       transition('* => *', [ // each time the binding value changes
         query(':leave', [
@@ -57,7 +32,7 @@ import {trigger, state, style, animate, transition, query, stagger} from '@angul
 
 @Injectable()
 export class TodoEntryComponent implements OnInit {
-  itemsRef: AngularFireList<any>;
+  taskRef: AngularFireList<any>;
   items: Observable<any[]>;
   todoForm: any;
   description = '';
@@ -75,9 +50,9 @@ export class TodoEntryComponent implements OnInit {
   rightIndex = 1000;
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
-    this.itemsRef = db.list('Tasks');
+    this.taskRef = db.list('Tasks');
     // Use snapshotChanges().map() to store the key
-    this.items = this.itemsRef.snapshotChanges().pipe(
+    this.items = this.taskRef.snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
       )
@@ -85,12 +60,11 @@ export class TodoEntryComponent implements OnInit {
   }
 
   addItem(taskName: string, taskDescription: string, todayString: string): void {
-    this.itemsRef.push({name: taskName, description: taskDescription, check: false, date: todayString});
+    this.taskRef.push({name: taskName, description: taskDescription, check: false, date: todayString});
   }
 
   submit(): void {
     this.taskTry = true;
-    console.log(this.taskTry);
     const dialogRef = this.dialog.open(AddtaskComponent, {
       width: '250px',
       data: {name: this.newTaskName, description: this.newTaskDescription}
@@ -102,7 +76,9 @@ export class TodoEntryComponent implements OnInit {
   }
 
   checkChange(key: string, isCheck: boolean): void {
-    this.itemsRef.update(key, {check: !isCheck});
+    setTimeout(() => {
+      this.taskRef.update(key, {check: !isCheck});
+    }, 100);
   }
 
   ngOnInit(): void {
@@ -133,13 +109,11 @@ export class TodoEntryComponent implements OnInit {
 
   panleft(currentIndex: number, evt: any): void {
     this.leftIndex = currentIndex;
-    console.log(evt);
     this.backTransform = true;
   }
 
   panright(currentIndex: number, evt: any): void {
     this.rightIndex = currentIndex + 1001 ;
-    console.log(evt, this.backTransform);
     this.styleObject(currentIndex + 1001);
     this.backTransform = false;
   }
@@ -153,4 +127,8 @@ export class TodoEntryComponent implements OnInit {
       return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
+  delete(index: any, key: any): void{
+    // Todo Add delete Functionality
+    alert('delete');
+}
 }

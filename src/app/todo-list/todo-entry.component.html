@@ -1,26 +1,51 @@
 <section class="todo-section">
   <h2>ToDo App</h2>
+  <div class="progress-bar-container">
+    <div class="circular">
+      <div class="inner"></div>
+      <div class="number">100%</div>
+      <div class="circle">
+        <div class="bar left">
+          <div class="progress"></div>
+        </div>
+        <div class="bar right">
+          <div class="progress"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
-    <ul class="task-list container-padding" >
-      <li (panleft)="panleft(i, $event.type)" (panright)="panright(i, $event.type)"
-          *ngFor="let item of items | async ; let i=index" [ngStyle]=styleObject(i)
-          class="item-list">
-        <div class="task-card">
-          <div class="icon-with-taskname">
-            <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
-                          (click)="checkChange(item.key, item.check)"></mat-checkbox>
-            <div class="name-desc-container" for="check">
-              <p class="task-name" style="height: 27px;" ellipsis>{{ item.name }}</p>
-              <p class="task-description" style="max-height: 60px;" ellipsis [ellipsis-content]="item.description"></p>
+    <ul class="task-list container-padding">
+      <li *ngFor="let item of items | async ; let i=index" class="list-items" >
+        <div (panleft)="panleft(i, $event.type)" (panright)="panright(i, $event.type)"
+             [ngStyle]=styleObject(i)
+             class="item-list">
+          <div class="task-card">
+            <div class="icon-with-taskname" [ngClass]="item.check ? 'checked' : ''">
+              <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
+                            (click)="checkChange(item.key, item.check)"></mat-checkbox>
+              <div class="name-desc-container" for="check">
+                <p class="task-name strike" style="height: 27px;" ellipsis>{{ item.name }}</p>
+                <p class="task-description" style="max-height: 60px;" ellipsis
+                   [ellipsis-content]="item.description"></p>
+              </div>
             </div>
+            <p class="task-date">{{item.date | date:'MMM d'}}</p>
           </div>
-          <p class="task-date">{{item.date | date:'MMM d'}}</p>
+        </div>
+        <div class="delete-container" mat-ripple>
+          <div class="delete-icon-holder">
+              <span class="material-icons-outlined delete-icon" aria-label="Delete Icon"
+                    (click)="delete(i, item.key)">
+              delete
+              </span>
+          </div>
         </div>
       </li>
     </ul>
     <div class="input-form">
       <div class="reminder-container" style="display: none" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
-        <div class="reminder-text pos-fix" >
+        <div class="reminder-text pos-fix">
           <p>By pressing this icon you can able to add your tasks</p>
         </div>
         <img class="reminder-svg pos-fix" src="assets/arrow.svg">

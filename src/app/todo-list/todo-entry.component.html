@@ -1,29 +1,41 @@
-<section class="todo-section">
+<section class="todo-section" *ngFor="let sc of score | async ; let i=index">
   <h2>ToDo App</h2>
-  <div class="progress-bar-container">
-    <div class="circular">
-      <div class="inner"></div>
-      <div class="number">100%</div>
-      <div class="circle">
-        <div class="bar left">
-          <div class="progress"></div>
-        </div>
-        <div class="bar right">
-          <div class="progress"></div>
-        </div>
+  <div >
+    <div class="progress-circle progress-circle-rounded set-height">
+      <div class="progress-circle-number set-height">
+        <strong class="text-center score-card"
+                tabindex="0">{{sc.scoreVal}}%</strong>
+      </div>
+      <div class="progress-circle-fill">
+        <svg class="icon" viewBox="0 0 40 40">
+          <circle
+            class="outer-stroke"
+            cx="20" cy="20"
+            r="15.9154943092"/>
+          <circle [style.strokeDashoffset]="100 - sc.scoreVal"
+                  class="offsetAnima"
+                  cx="20"
+                  cy="20"
+                  r="15.9154943092" transform="rotate(-90,20,20)"/>
+        </svg>
       </div>
     </div>
+    <div class="progress-data">
+
+    </div>
   </div>
+
+
   <div class="container">
     <ul class="task-list container-padding">
-      <li *ngFor="let item of items | async ; let i=index" class="list-items" >
+      <li *ngFor="let item of items | async ; let i=index" class="list-items">
         <div (panleft)="panleft(i, $event.type)" (panright)="panright(i, $event.type)"
              [ngStyle]=styleObject(i)
              class="item-list">
           <div class="task-card">
             <div class="icon-with-taskname" [ngClass]="item.check ? 'checked' : ''">
               <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
-                            (click)="checkChange(item.key, item.check)"></mat-checkbox>
+                            (click)="checkChange(item.key, item.check, sc.scoreVal)"></mat-checkbox>
               <div class="name-desc-container" for="check">
                 <p class="task-name strike" style="height: 27px;" ellipsis>{{ item.name }}</p>
                 <p class="task-description" style="max-height: 60px;" ellipsis

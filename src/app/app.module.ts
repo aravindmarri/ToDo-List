@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import {BrowserModule, HammerModule} from '@angular/platform-browser';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
@@ -22,6 +22,7 @@ import {AddtaskComponent} from './todo-list/addtask/addtask.component';
 import {EllipsisModule} from 'ngx-ellipsis';
 import {MatRippleModule} from '@angular/material/core';
 
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
     swipe: {velocity: 0.4, threshold: 20} // override default settings

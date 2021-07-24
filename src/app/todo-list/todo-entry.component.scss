@@ -10,78 +10,6 @@ $todo-main: #462255;
   align-items: center;
   height: 100%;
 
-  .progress-bar-container{
-    height: 200px;
-    display: flex;
-    align-items: center;
-    .circular{
-      height:100px;
-      width: 100px;
-      position: relative;
-      transform:scale(2);
-    }
-    .circular .inner{
-      position: absolute;
-      z-index: 6;
-      top: 50%;
-      left: 50%;
-      height: 80px;
-      width: 80px;
-      margin: -40px 0 0 -40px;
-      background: #dde6f0;
-      border-radius: 100%;
-
-    }
-    .circular .number{
-      position: absolute;
-      top:50%;
-      left:50%;
-      transform: translate(-50%, -50%);
-      z-index:10;
-      font-size:18px;
-      font-weight:500;
-      color:#4158d0;
-    }
-    .circular .bar{
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      background: #fff;
-      -webkit-border-radius: 100%;
-      clip: rect(0px, 100px, 100px, 50px);
-    }
-    .circle .bar .progress{
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      -webkit-border-radius: 100%;
-      clip: rect(0px, 50px, 100px, 0px);
-      background: #4158d0;
-    }
-    .circle .left .progress{
-      z-index:1;
-      animation: left 4s linear both;
-    }
-    @keyframes left{
-      100%{
-        transform: rotate(180deg);
-      }
-    }
-    .circle .right {
-      transform: rotate(180deg);
-      z-index:3;
-
-    }
-    .circle .right .progress{
-      animation: right 4s linear both;
-      animation-delay:4s;
-    }
-    @keyframes right{
-      100%{
-        transform: rotate(180deg);
-      }
-    }
-  }
   .container {
     width: 400px;
     display: flex;
@@ -290,5 +218,72 @@ $todo-main: #462255;
 .list-items:nth-child(even) {
   .task-card {
     background: url("../../assets/card-bg-even.svg") no-repeat top right #ddfff7;
+  }
+}
+%min-size {
+  height: 100px !important;
+  width: 100px;
+}
+
+.progress-circle {
+  position: relative;
+  height: 100px;
+  width: 100px;
+
+  .progress-circle-number {
+    @extend %min-size;
+    position: absolute;
+    height: 100%;
+    .text-center{
+      @extend %min-size;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-card-score {
+      font-weight: bold;
+      font-size: 1.75em;
+      line-height: 34px;
+      width: auto;
+      margin: 0;
+    }
+
+    .score-card-score-title {
+      font-size: 0.750em;
+      font-weight: 400;
+      line-height: 1em;
+      width: auto;
+      margin: 0;
+    }
+  }
+
+  .progress-circle-fill {
+    @extend %min-size;
+    position: absolute;
+    margin: 0 auto;
+    .outer-stroke{
+      stroke: rgba(170, 68, 101, .5);
+    }
+    .offsetAnima{
+      stroke: rgba(170, 68, 101, 1);
+      stroke-dashoffset: 100;
+      //animation: left 5s ease-in forwards;
+      transition: stroke-dashoffset 2s ease-in;
+    }
+    circle {
+      @extend %min-size;
+      fill: none;
+      stroke: rgba(0, 0, 0, .12);
+      stroke-width: 2.5px;
+    }
+
+
+    circle:nth-child(2) {
+      animation: load-circle 1s;
+      stroke: $todo-main;
+      stroke-dasharray: 100px;
+      stroke-linecap: round;
+    }
   }
 }

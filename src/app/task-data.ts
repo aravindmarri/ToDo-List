@@ -1,4 +1,6 @@
 export interface TaskData {
-  name: string;
+  check: boolean;
+  date: string;
   description: string;
+  name: string;
 }

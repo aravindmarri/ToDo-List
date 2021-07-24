@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
 import {trigger, state, style, animate, transition, query, stagger} from '@angular/animations';
+import {TaskData} from '../task-data';
 
 @Component({
   selector: 'app-todo-entry',
@@ -33,7 +34,9 @@ import {trigger, state, style, animate, transition, query, stagger} from '@angul
 @Injectable()
 export class TodoEntryComponent implements OnInit {
   taskRef: AngularFireList<any>;
+  scoreRef: AngularFireList<any>;
   items: Observable<any[]>;
+  score: Observable<any[]>;
   todoForm: any;
   description = '';
   name = '';
@@ -51,8 +54,14 @@ export class TodoEntryComponent implements OnInit {
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.taskRef = db.list('Tasks');
+    this.scoreRef = db.list('score');
     // Use snapshotChanges().map() to store the key
     this.items = this.taskRef.snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+      )
+    );
+    this.score = this.scoreRef.snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
       )
@@ -75,15 +84,18 @@ export class TodoEntryComponent implements OnInit {
     });
   }
 
-  checkChange(key: string, isCheck: boolean): void {
+  checkChange(key: string, isCheck: boolean, score: number): void {
     setTimeout(() => {
       this.taskRef.update(key, {check: !isCheck});
+      this.scoreRef.update(key, addScore( score ));
     }, 100);
   }
 
   ngOnInit(): void {
     this.renderCounter();
     this.setDate();
+    console.log(this.score.pipe());
+    console.log(this.items);
   }
 
   setDate(): void {
@@ -113,22 +125,25 @@ export class TodoEntryComponent implements OnInit {
   }
 
   panright(currentIndex: number, evt: any): void {
-    this.rightIndex = currentIndex + 1001 ;
+    this.rightIndex = currentIndex + 1001;
     this.styleObject(currentIndex + 1001);
     this.backTransform = false;
   }
 
   styleObject(currentIndex: number): object | any {
-    if (this.leftIndex === currentIndex  && this.backTransform) {
+    if (this.leftIndex === currentIndex && this.backTransform) {
 
       return {transform: 'translate3d(-64px, 0px, 0px)'};
-    }
-    else{
+    } else {
       return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
-  delete(index: any, key: any): void{
+
+  delete(index: any, key: any): void {
     // Todo Add delete Functionality
     alert('delete');
-}
+  }
+  addScore(score): void {
+    
+  }
 }

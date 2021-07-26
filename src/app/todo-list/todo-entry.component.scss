@@ -13,8 +13,105 @@ $todo-main: #462255;
   .container {
     width: 400px;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    padding: 25px;
+  }
+
+  .progress-container {
+    justify-content: space-evenly !important;
+    align-items: center;
+    flex-direction: row;
+    .progress-circle {
+      position: relative;
+      height: 100px;
+      width: 100px;
+
+      .progress-circle-number {
+        @extend %min-size;
+        position: absolute;
+        height: 100%;
+
+        .text-center {
+          @extend %min-size;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .score-card-score {
+          font-weight: bold;
+          font-size: 1.75em;
+          line-height: 34px;
+          width: auto;
+          margin: 0;
+        }
+
+        .score-card-score-title {
+          font-size: 0.750em;
+          font-weight: 400;
+          line-height: 1em;
+          width: auto;
+          margin: 0;
+        }
+      }
+
+      .progress-circle-fill {
+        @extend %min-size;
+        position: absolute;
+        margin: 0 auto;
+
+        .outer-stroke {
+          stroke: rgba(170, 68, 101, .5);
+        }
+
+        .offsetAnima {
+          stroke: rgba(170, 68, 101, 1);
+          stroke-dashoffset: 100;
+          //animation: left 5s ease-in forwards;
+          transition: stroke-dashoffset 2s ease-in;
+        }
+
+        circle {
+          @extend %min-size;
+          fill: none;
+          stroke: rgba(0, 0, 0, .12);
+          stroke-width: 2.5px;
+        }
+
+
+        circle:nth-child(2) {
+          animation: load-circle 1s;
+          stroke: $todo-main;
+          stroke-dasharray: 100px;
+          stroke-linecap: round;
+        }
+      }
+    }
+
+    .progress-data {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      h4{
+        margin: 10px 0;
+      }
+      .report-text{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        strong{
+
+        }
+        p{
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+  }
+
+  .task-container {
+    flex-direction: column;
 
     .input-form {
       display: flex;
@@ -57,6 +154,8 @@ $todo-main: #462255;
 
     .task-list {
       list-style-type: none;
+      padding: 0;
+      margin: 0;
 
       .list-items {
         position: relative;
@@ -153,9 +252,6 @@ $todo-main: #462255;
   position: fixed;
 }
 
-.container-padding {
-  padding: 25px;
-}
 
 .absolute {
   position: absolute;
@@ -163,12 +259,13 @@ $todo-main: #462255;
 
 @media (max-width: 859px) {
   .container {
-    width: 100% !important;
+    width: 70%;
   }
 }
 
 @media (max-width: 599px) {
-  .container-padding {
+  .container {
+    width: 90% !important;
     padding: 16px;
   }
   .reminder-text {
@@ -188,27 +285,6 @@ $todo-main: #462255;
   }
 }
 
-.checked {
-  .strike {
-    position: relative;
-
-    &::after {
-      content: ' ';
-      position: absolute;
-      top: 55%;
-      left: 0;
-      width: 100%;
-      height: 1.5px;
-      background: $todo-main;
-      animation-name: strike;
-      animation-duration: 4s;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
-    }
-  }
-}
-
 .list-items:nth-child(odd) {
   .task-card {
     background: url("../../assets/card-bg-odd.svg") no-repeat bottom right #ddfff7;
@@ -220,70 +296,10 @@ $todo-main: #462255;
     background: url("../../assets/card-bg-even.svg") no-repeat top right #ddfff7;
   }
 }
+
 %min-size {
   height: 100px !important;
   width: 100px;
 }
 
-.progress-circle {
-  position: relative;
-  height: 100px;
-  width: 100px;
 
-  .progress-circle-number {
-    @extend %min-size;
-    position: absolute;
-    height: 100%;
-    .text-center{
-      @extend %min-size;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .score-card-score {
-      font-weight: bold;
-      font-size: 1.75em;
-      line-height: 34px;
-      width: auto;
-      margin: 0;
-    }
-
-    .score-card-score-title {
-      font-size: 0.750em;
-      font-weight: 400;
-      line-height: 1em;
-      width: auto;
-      margin: 0;
-    }
-  }
-
-  .progress-circle-fill {
-    @extend %min-size;
-    position: absolute;
-    margin: 0 auto;
-    .outer-stroke{
-      stroke: rgba(170, 68, 101, .5);
-    }
-    .offsetAnima{
-      stroke: rgba(170, 68, 101, 1);
-      stroke-dashoffset: 100;
-      //animation: left 5s ease-in forwards;
-      transition: stroke-dashoffset 2s ease-in;
-    }
-    circle {
-      @extend %min-size;
-      fill: none;
-      stroke: rgba(0, 0, 0, .12);
-      stroke-width: 2.5px;
-    }
-
-
-    circle:nth-child(2) {
-      animation: load-circle 1s;
-      stroke: $todo-main;
-      stroke-dasharray: 100px;
-      stroke-linecap: round;
-    }
-  }
-}

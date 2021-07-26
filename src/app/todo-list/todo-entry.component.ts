@@ -4,39 +4,23 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
-import {trigger, state, style, animate, transition, query, stagger} from '@angular/animations';
 import {TaskData} from '../task-data';
+import {NewTaskService} from '../new-task.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-todo-entry',
   templateUrl: './todo-entry.component.html',
   styleUrls: ['./todo-entry.component.scss'],
-  animations: [
-    trigger('listAnimation', [
-      transition('* => *', [ // each time the binding value changes
-        query(':leave', [
-          stagger(100, [
-            animate('0.5s', style({opacity: 0}))
-          ])
-        ]),
-        query(':enter', [
-          style({opacity: 0}),
-          stagger(100, [
-            animate('0.5s', style({opacity: 1}))
-          ])
-        ])
-      ])
-    ])
-
-  ]
 })
 
 @Injectable()
 export class TodoEntryComponent implements OnInit {
   taskRef: AngularFireList<any>;
   scoreRef: AngularFireList<any>;
-  items: Observable<any[]>;
+  items: TaskData[] = [];
   score: Observable<any[]>;
+  scoreKey = '-MfNAwF9PQQS9-bZftNi';
   todoForm: any;
   description = '';
   name = '';
@@ -51,16 +35,21 @@ export class TodoEntryComponent implements OnInit {
   todayString: string = new Date().toDateString();
   leftIndex = 1000;
   rightIndex = 1000;
+  private db: any;
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
-    this.taskRef = db.list('Tasks');
+    this.taskRef = db.list('/Tasks');
     this.scoreRef = db.list('score');
     // Use snapshotChanges().map() to store the key
-    this.items = this.taskRef.snapshotChanges().pipe(
+    this.taskRef.snapshotChanges().pipe(
       map(changes =>
-        changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+        changes.map(c =>
+          ({key: c.payload.key, ...c.payload.val()})
+        )
       )
-    );
+    ).subscribe(data => {
+      this.items = data;
+    });
     this.score = this.scoreRef.snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
@@ -69,7 +58,8 @@ export class TodoEntryComponent implements OnInit {
   }
 
   addItem(taskName: string, taskDescription: string, todayString: string): void {
-    this.taskRef.push({name: taskName, description: taskDescription, check: false, date: todayString});
+    this.taskRef.push({name: taskName, description: taskDescription, check: false, compareCheck: false, date: todayString});
+    this.scoreRef.update(this.scoreKey, {totalTasks: (firebase.database.ServerValue.increment(1))});
   }
 
   submit(): void {
@@ -84,22 +74,27 @@ export class TodoEntryComponent implements OnInit {
     });
   }
 
-  checkChange(key: string, isCheck: boolean, score: number): void {
-    setTimeout(() => {
-      this.taskRef.update(key, {check: !isCheck});
-      this.scoreRef.update(key, addScore( score ));
-    }, 100);
+  checkChange(index: number, key: string, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number, tasksDone: number): void {
+    const checkVal = !isCheck;
+    let completedTasks = tasksDone;
+    let addScore = score;
+    if (addScore >= 100) {
+      addScore = 0;
+    }
+    else if (checkVal && !compareCheck){
+      completedTasks += 1;
+      addScore = score + 2;
+    }
+    this.taskRef.update(key, {check: checkVal, compareCheck: true});
+    this.scoreRef.update(scoreKey, {scoreVal: addScore, tasksDone: completedTasks});
+    console.log(checkVal);
+    this.backTransform = false;
+    this.styleObject(index);
   }
 
   ngOnInit(): void {
+    this.db.doc().delete();
     this.renderCounter();
-    this.setDate();
-    console.log(this.score.pipe());
-    console.log(this.items);
-  }
-
-  setDate(): void {
-    console.log(this.todayString);
   }
 
   renderCounter(): void {
@@ -132,18 +127,27 @@ export class TodoEntryComponent implements OnInit {
 
   styleObject(currentIndex: number): object | any {
     if (this.leftIndex === currentIndex && this.backTransform) {
-
       return {transform: 'translate3d(-64px, 0px, 0px)'};
     } else {
       return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
 
-  delete(index: any, key: any): void {
-    // Todo Add delete Functionality
-    alert('delete');
+  delete(index: any, key: any, isCheck: boolean, scoreKey: any, score: number): void {
+    let decScore = score;
+    if (decScore >= 100) {
+      if (isCheck) {
+        decScore = score + 1;
+      } else {
+        decScore = score - 3;
+      }
+    } else {
+      decScore = 0;
+    }
+    this.taskRef.remove(key);
+    this.scoreRef.update(scoreKey, {scoreVal: decScore});
+    this.backTransform = false;
   }
-  addScore(score): void {
-    
-  }
+
 }
+//TODO need to work on after deleteing percentage is getting decresing need to check once!

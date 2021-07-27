@@ -30,7 +30,7 @@
   <div class="task-container container">
     <ul class="task-list">
       <li *ngFor="let item of items; let i=index" class="list-items">
-        <div (panleft)="panleft(i, $event.type)" (panright)="panright(i, $event.type)"
+        <div (panleft)="panleft(i)" (panright)="panright(i)"
              [ngStyle]=styleObject(i)
              class="item-list">
           <div class="task-card">
@@ -46,10 +46,9 @@
             <p class="task-date">{{item.date | date:'MMM d'}}</p>
           </div>
         </div>
-        <div class="delete-container" mat-ripple>
+        <div class="delete-container" mat-ripple (click)="delete(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal)">
           <div class="delete-icon-holder">
-              <span class="material-icons-outlined delete-icon" aria-label="Delete Icon"
-                    (click)="delete(i, item.key, item.check,  sc.key, sc.scoreVal)">
+              <span class="material-icons-outlined delete-icon" aria-label="Delete Icon">
               delete
               </span>
           </div>
@@ -57,11 +56,14 @@
       </li>
     </ul>
     <div class="input-form">
-      <div class="reminder-container" style="display: none" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
+      <div class="reminder-container" [ngStyle]="{'display': (displayTry ? 'block' : 'none')}">
         <div class="reminder-text pos-fix">
+          <span class="material-icons close" (click)="closeReminder()">
+          close
+          </span>
           <p>By pressing this icon you can able to add your tasks</p>
         </div>
-        <img class="reminder-svg pos-fix" src="assets/arrow.svg">
+        <img class="reminder-svg pos-fix" src="assets/arrow.svg" alt="image">
       </div>
       <div class="buttons-container container-padding pos-fix">
         <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="submit()">

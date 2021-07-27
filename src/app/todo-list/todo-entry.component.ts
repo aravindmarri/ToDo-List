@@ -6,7 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
 import {TaskData} from '../task-data';
 import {NewTaskService} from '../new-task.service';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-todo-entry',
@@ -35,10 +35,10 @@ export class TodoEntryComponent implements OnInit {
   todayString: string = new Date().toDateString();
   leftIndex = 1000;
   rightIndex = 1000;
-  private db: any;
+  private startDate: any;
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
-    this.taskRef = db.list('/Tasks');
+    this.taskRef = db.list('Tasks');
     this.scoreRef = db.list('score');
     // Use snapshotChanges().map() to store the key
     this.taskRef.snapshotChanges().pipe(
@@ -58,6 +58,7 @@ export class TodoEntryComponent implements OnInit {
   }
 
   addItem(taskName: string, taskDescription: string, todayString: string): void {
+    this.updateDate();
     this.taskRef.push({name: taskName, description: taskDescription, check: false, compareCheck: false, date: todayString});
     this.scoreRef.update(this.scoreKey, {totalTasks: (firebase.database.ServerValue.increment(1))});
   }
@@ -93,8 +94,8 @@ export class TodoEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.db.doc().delete();
     this.renderCounter();
+    this.checkDate();
   }
 
   renderCounter(): void {
@@ -113,13 +114,26 @@ export class TodoEntryComponent implements OnInit {
         }
       }, 30000);
   }
+  closeReminder(): void{
+    this.displayTry = false;
+  }
+  checkDate(): void{
+    const currentDate = new Date(); // Mon Nov 08 2020 09:38:46 GMT+0700 (Indochina Time)
+    currentDate.setDate(currentDate.getDate() + 7);
+    alert(currentDate.toDateString()); // return -> Mon Nov 09 2020 09:38:46 GMT+0700 (Indochina Time)
+    // this.scoreRef.snapshotChanges()
+    let tempDate;
+    tempDate = firebase.database().ref('score/lastModifiedDate').orderByChild('lastModifiedDate').toJSON();
+    console.log(tempDate);
+  //  ToDo need to work on date comparesion on that deleting the data!
+  }
 
-  panleft(currentIndex: number, evt: any): void {
+  panleft(currentIndex: number): void {
     this.leftIndex = currentIndex;
     this.backTransform = true;
   }
 
-  panright(currentIndex: number, evt: any): void {
+  panright(currentIndex: number): void {
     this.rightIndex = currentIndex + 1001;
     this.styleObject(currentIndex + 1001);
     this.backTransform = false;
@@ -133,21 +147,24 @@ export class TodoEntryComponent implements OnInit {
     }
   }
 
-  delete(index: any, key: any, isCheck: boolean, scoreKey: any, score: number): void {
+  delete(index: any, key: any, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number): void {
     let decScore = score;
-    if (decScore >= 100) {
+    if (decScore < 100 && decScore > 3) {
       if (isCheck) {
-        decScore = score + 1;
-      } else {
+        decScore = score;
+      } else if (!compareCheck) {
         decScore = score - 3;
       }
     } else {
       decScore = 0;
     }
     this.taskRef.remove(key);
-    this.scoreRef.update(scoreKey, {scoreVal: decScore});
+    this.updateDate();
+    this.scoreRef.update(this.scoreKey, {scoreVal: decScore});
     this.backTransform = false;
   }
-
+  updateDate(): void{
+    this.scoreRef.update(this.scoreKey, {lastModifiedDate: this.todayString});
+  }
 }
-//TODO need to work on after deleteing percentage is getting decresing need to check once!
+

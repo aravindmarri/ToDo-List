@@ -20,7 +20,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="taskdata" cdkFocusInitial [mat-dialog-close]="taskdata" (click)="addTask()"
+  <button mat-button [mat-dialog-close]="taskdata" [mat-dialog-close]="taskdata" (click)="addTask()"
           [disabled]="!newTask.form.valid">Add
   </button>
 </div>

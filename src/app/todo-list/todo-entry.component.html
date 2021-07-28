@@ -27,8 +27,17 @@
       </div>
     </div>
   </div>
+  <div class="helper-text">
+    <div class="swipe-text">
+      <span class="material-icons">
+      swipe
+<!--        add_task-->
+      </span>
+      <p>Swipe left to delete</p>
+    </div>
+  </div>
   <div class="task-container container">
-    <ul class="task-list">
+    <ul class="task-list" >
       <li *ngFor="let item of items; let i=index" class="list-items">
         <div (panleft)="panleft(i)" (panright)="panright(i)"
              [ngStyle]=styleObject(i)
@@ -43,7 +52,7 @@
                    [ellipsis-content]="item.description"></p>
               </div>
             </div>
-            <p class="task-date">{{item.date | date:'MMM d'}}</p>
+            <p class="task-date">{{item.date| date: 'dd MMM'}}</p>
           </div>
         </div>
         <div class="delete-container" mat-ripple (click)="delete(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal)">

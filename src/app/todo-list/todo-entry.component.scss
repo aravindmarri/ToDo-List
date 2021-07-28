@@ -21,6 +21,7 @@ $todo-main: #462255;
     justify-content: space-evenly !important;
     align-items: center;
     flex-direction: row;
+
     .progress-circle {
       position: relative;
       height: 100px;
@@ -93,21 +94,35 @@ $todo-main: #462255;
       display: flex;
       flex-direction: column;
       padding: 10px;
-      h4{
+
+      h4 {
         margin: 0 0 10px 0;
         font: normal 500 20px/24px sans-serif;
       }
-      .report-text{
+
+      .report-text {
         display: flex;
         flex-direction: row;
         align-items: center;
-        strong{
+
+        strong {
           white-space: nowrap;
         }
-        p{
+
+        p {
           margin: 0 0 0 10px;
           font: normal 500 15px/24px sans-serif;
         }
+      }
+    }
+  }
+
+  .helper-text {
+    .swipe-text{
+      display: flex;
+      align-items: center;
+      p{
+        margin: 0 0 0 10px;
       }
     }
   }
@@ -128,12 +143,14 @@ $todo-main: #462255;
           padding: 15px;
           text-align: center;
           background: $todo-background;
-         .close{
-           position: absolute;
-           right: -15px;
-           top: -15px;
-         }
+
+          .close {
+            position: absolute;
+            right: -15px;
+            top: -15px;
+          }
         }
+
         .reminder-svg {
           bottom: 93px;
           height: 30px;
@@ -280,7 +297,7 @@ $todo-main: #462255;
   .reminder-text {
     bottom: 75px !important;
   }
-  .buttons-container{
+  .buttons-container {
     padding: 16px;
   }
 }
@@ -315,6 +332,7 @@ $todo-main: #462255;
     }
   }
 }
+
 .list-items:nth-child(odd) {
   .task-card {
     background: url("../../assets/card-bg-odd.svg") no-repeat bottom right #ddfff7;

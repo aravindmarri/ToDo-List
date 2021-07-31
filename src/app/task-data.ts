@@ -8,5 +8,8 @@ export interface TaskData {
 }
 export interface Score {
   key: string;
+  lastModifiedDate: Date;
   scoreVal: number;
+  tasksDone: number;
+  totalTasks: number;
 }

@@ -1,6 +1,6 @@
 $todo-background: #ddfff7;
 $todo-border: #93e1d8;
-$todo-lite: #ffa69e;
+$todo-lite: #fbc8c3;
 $todo-button: #aa4465;
 $todo-main: #462255;
 
@@ -118,10 +118,11 @@ $todo-main: #462255;
   }
 
   .helper-text {
-    .swipe-text{
+    .swipe-text {
       display: flex;
       align-items: center;
-      p{
+
+      p {
         margin: 0 0 0 10px;
       }
     }
@@ -133,6 +134,7 @@ $todo-main: #462255;
     .input-form {
       display: flex;
       width: min-content;
+      z-index: 15;
 
       .reminder-container {
         .reminder-text {
@@ -142,13 +144,20 @@ $todo-main: #462255;
           border-radius: 20px;
           padding: 15px;
           text-align: center;
-          background: $todo-background;
+          background: $todo-lite;
 
-          .close {
-            position: absolute;
-            right: -15px;
-            top: -15px;
+          &:hover {
+            .close {
+              display: block;
+            }
           }
+          .close {
+             cursor: pointer;
+             display: none;
+             position: absolute;
+             right: -15px;
+             top: -15px;
+           }
         }
 
         .reminder-svg {
@@ -285,14 +294,14 @@ $todo-main: #462255;
 
 @media (max-width: 859px) {
   .container {
-    width: 70%;
+    width: 70% !important;
   }
 }
 
 @media (max-width: 599px) {
   .container {
     width: 90% !important;
-    padding: 16px;
+    padding: 16px !important;
   }
   .reminder-text {
     bottom: 75px !important;

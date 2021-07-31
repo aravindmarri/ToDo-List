@@ -30,10 +30,9 @@
   <div class="helper-text">
     <div class="swipe-text">
       <span class="material-icons">
-      swipe
-<!--        add_task-->
+        {{availableTask ? 'swipe' : 'add'}}
       </span>
-      <p>Swipe left to delete</p>
+      <p>{{availableTask ? 'Swipe left to delete' : 'Add new tasks by clicking below icon'}}</p>
     </div>
   </div>
   <div class="task-container container">
@@ -47,9 +46,9 @@
               <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
                             (click)="checkChange(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal, sc.tasksDone)"></mat-checkbox>
               <div class="name-desc-container" for="check">
-                <p class="task-name strike" style="height: 27px;" ellipsis>{{ item.name }}</p>
-                <p class="task-description" style="max-height: 60px;" ellipsis
-                   [ellipsis-content]="item.description"></p>
+                <p class="task-name strike" style="height: 27px; max-width: 250px; width: auto;" ellipsis>{{ item.name }}</p>
+                <p class="task-description" style="max-height: 60px; max-width: 250px; width: auto;" ellipsis
+                   ellipsis>{{item.description}}</p>
               </div>
             </div>
             <p class="task-date">{{item.date| date: 'dd MMM'}}</p>

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
-import {TaskData} from '../task-data';
+import {Score, TaskData} from '../task-data';
 import firebase from 'firebase/app';
 
 @Component({
@@ -18,7 +18,7 @@ export class TodoEntryComponent implements OnInit {
   taskRef: AngularFireList<any>;
   scoreRef: AngularFireList<any>;
   items: TaskData[] = [];
-  score: Observable<any[]>;
+  score: Observable<Score[]>;
   scoreKey = '-MfNAwF9PQQS9-bZftNi';
   todoForm: any;
   description = '';
@@ -28,14 +28,13 @@ export class TodoEntryComponent implements OnInit {
   displayTry = false;
   stopDisplayTry = false;
   backTransform = true;
-  color = '#aa4465';
   newTaskName = '';
   newTaskDescription = '';
   todayString: string = new Date().toString() ;
   leftIndex = 1000;
   rightIndex = 1000;
-  private startDate: any;
-  private scoreDate: any;
+  availableTask = false;
+  taskVal: Observable<TaskData[]>;
 
   constructor(db: AngularFireDatabase, public dialog: MatDialog) {
     this.taskRef = db.list('Tasks');
@@ -54,12 +53,17 @@ export class TodoEntryComponent implements OnInit {
         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
       )
     );
+    this.taskVal = this.taskRef.snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+      )
+    );
   }
 
   addItem(taskName: string, taskDescription: string, todayString: string): void {
     this.updateDate();
     this.taskRef.push({name: taskName, description: taskDescription, check: false, compareCheck: false, date: todayString});
-    this.scoreRef.update(this.scoreKey, {totalTasks: (firebase.database.ServerValue.increment(1))});
+    this.scoreRef.update(this.scoreKey, {totalTasks: (firebase.database.ServerValue.increment(1))}).then();
   }
 
   submit(): void {
@@ -83,9 +87,14 @@ export class TodoEntryComponent implements OnInit {
     } else if (checkVal && !compareCheck) {
       completedTasks += 1;
       addScore = score + 2;
+    } else if (checkVal){
+      completedTasks += 1;
     }
-    this.taskRef.update(key, {check: checkVal, compareCheck: true});
-    this.scoreRef.update(scoreKey, {scoreVal: addScore, tasksDone: completedTasks});
+    else if (!checkVal){
+      completedTasks -= 1;
+    }
+    this.taskRef.update(key, {check: checkVal, compareCheck: true}).then();
+    this.scoreRef.update(scoreKey, {scoreVal: addScore, tasksDone: completedTasks}).then();
     this.backTransform = false;
     this.styleObject(index);
   }
@@ -96,17 +105,16 @@ export class TodoEntryComponent implements OnInit {
     this.checkEmptyTaks();
   }
   checkEmptyTaks(): void{
-    //TODO need to work on rendering based on the tasks whether there present or not!
-    //and need to add on hover close for add task FAB
-    // let temp: any;
-    // this.score.forEach(values => {
-    //   console.log(values);
-    // });
-    // console.log(this.items);
-    // if (this.items){
-    //   alert('hi');
-    // }
-  }
+    this.taskVal.forEach(values => {
+      if (values[0] === undefined) {
+        this.availableTask = false;
+        this.displayTry = true;
+      } else {
+        this.availableTask = true;
+        this.displayTry = false;
+      }
+    }).then();
+   }
   renderCounter(): void {
     setTimeout(
       () => {
@@ -132,16 +140,19 @@ export class TodoEntryComponent implements OnInit {
     const lateWeekDate = new Date();
     lateWeekDate.setDate(lateWeekDate.getDate() - 7);
     this.score.forEach(lastModifiedDate => {
-      this.getDate(lateWeekDate , new Date(lastModifiedDate[0].lastModifiedDate));
-    });
+      this.getDate(lateWeekDate, new Date(lastModifiedDate[0].lastModifiedDate));
+    }).then() ;
   }
 
   getDate(lateWeekDate: Date, lastModDate: Date): void {
     const zeroVal = 0;
     if (lateWeekDate > lastModDate) {
-      alert('HI');
-      this.taskRef.remove();
-      this.scoreRef.update(this.scoreKey, {lastModifiedDate: this.todayString, scoreVal: zeroVal, tasksDone: zeroVal, totalTasks: zeroVal});
+      this.scoreRef.update(this.scoreKey, {
+        lastModifiedDate: this.todayString,
+        scoreVal: zeroVal,
+        tasksDone: zeroVal,
+         totalTasks: zeroVal
+      }).then();
     }
   }
 
@@ -163,26 +174,26 @@ export class TodoEntryComponent implements OnInit {
       return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
-
+  // TODO need to work on getting accurate values on delete option.
   delete(index: any, key: any, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number): void {
     let decScore = score;
-    if (decScore < 100 && decScore > 3) {
+    if (decScore < 100 && decScore >= 0) {
       if (isCheck) {
         decScore = score;
-      } else if (!compareCheck) {
+      } else if (!compareCheck && decScore > 3 ) {
         decScore = score - 3;
       }
     } else {
       decScore = 0;
     }
-    this.taskRef.remove(key);
+    this.taskRef.remove(key).then();
     this.updateDate();
-    this.scoreRef.update(this.scoreKey, {scoreVal: decScore});
+    this.scoreRef.update(this.scoreKey, {scoreVal: decScore}).then();
     this.backTransform = false;
   }
 
   updateDate(): void {
-    this.scoreRef.update(this.scoreKey, {lastModifiedDate: this.todayString});
+    this.scoreRef.update(this.scoreKey, {lastModifiedDate: this.todayString}).then();
   }
 }
 

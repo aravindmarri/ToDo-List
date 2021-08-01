@@ -9,7 +9,13 @@ $todo-main: #462255;
   flex-direction: column;
   align-items: center;
   height: 100%;
-
+  .header-container{
+    .mat-close{
+      top: 0;
+      right: 0;
+      margin: 14.405px;
+    }
+  }
   .container {
     width: 400px;
     display: flex;
@@ -93,7 +99,10 @@ $todo-main: #462255;
     .progress-data {
       display: flex;
       flex-direction: column;
+      align-items: center;
       padding: 10px;
+      max-width: 200px;
+      width: 100%;
 
       h4 {
         margin: 0 0 10px 0;
@@ -188,7 +197,7 @@ $todo-main: #462255;
     .task-list {
       list-style-type: none;
       padding: 0;
-      margin: 0;
+      margin: 0 0 50px 0;
 
       .list-items {
         position: relative;
@@ -197,6 +206,12 @@ $todo-main: #462255;
         .item-list {
           transition: transform 0.5s ease-in;
           z-index: 10;
+          cursor: -webkit-grab;
+          cursor: grab;
+          &:active{
+            cursor: -webkit-grabbing;
+            cursor: grabbing;
+          }
 
           .task-card {
             margin: 10px 0;
@@ -305,6 +320,9 @@ $todo-main: #462255;
   }
   .reminder-text {
     bottom: 75px !important;
+    .close{
+      display: block !important;
+    }
   }
   .buttons-container {
     padding: 16px;

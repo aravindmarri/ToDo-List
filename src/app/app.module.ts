@@ -1,6 +1,5 @@
 import {Injectable, NgModule} from '@angular/core';
-import {BrowserModule, HammerModule} from '@angular/platform-browser';
-import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import {BrowserModule, HammerModule,  HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -21,11 +20,15 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {AddtaskComponent} from './todo-list/addtask/addtask.component';
 import {EllipsisModule} from 'ngx-ellipsis';
 import {MatRippleModule} from '@angular/material/core';
+import { ConformClearComponent } from './todo-list/conform-clear/conform-clear.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
-    swipe: {velocity: 0.4, threshold: 20} // override default settings
+    swipe: { direction: Hammer.DIRECTION_HORIZONTAL },
+    pinch: { enable: false },
+    rotate: { enable: false },
+    pan: { enable: true }
   } as any;
 }
 
@@ -34,6 +37,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     AppComponent,
     TodoEntryComponent,
     AddtaskComponent,
+    ConformClearComponent,
 
   ],
   imports: [

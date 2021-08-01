@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddtaskComponent} from './addtask/addtask.component';
 import {Score, TaskData} from '../task-data';
 import firebase from 'firebase/app';
+import {ConformClearComponent} from './conform-clear/conform-clear.component';
 
 @Component({
   selector: 'app-todo-entry',
@@ -66,7 +67,7 @@ export class TodoEntryComponent implements OnInit {
     this.scoreRef.update(this.scoreKey, {totalTasks: (firebase.database.ServerValue.increment(1))}).then();
   }
 
-  submit(): void {
+  openAddTaskDialog(): void {
     this.taskTry = true;
     const dialogRef = this.dialog.open(AddtaskComponent, {
       width: '250px',
@@ -77,7 +78,12 @@ export class TodoEntryComponent implements OnInit {
       this.addItem(newData.name, newData.description, this.todayString);
     });
   }
-
+  conformClearDialog(): void{
+    const confomrdialogRef = this.dialog.open(ConformClearComponent, {
+      width: '250px',
+      data: {name: this.newTaskName, description: this.newTaskDescription}
+    });
+  }
   checkChange(index: number, key: string, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number, tasksDone: number): void {
     const checkVal = !isCheck;
     let completedTasks = tasksDone;
@@ -174,14 +180,17 @@ export class TodoEntryComponent implements OnInit {
       return {transform: 'translate3d(0px, 0px, 0px)'};
     }
   }
-  // TODO need to work on getting accurate values on delete option.
   delete(index: any, key: any, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number): void {
     let decScore = score;
     if (decScore < 100 && decScore >= 0) {
       if (isCheck) {
         decScore = score;
-      } else if (!compareCheck && decScore > 3 ) {
-        decScore = score - 3;
+      } else if (!compareCheck) {
+        if (decScore > 3 ){
+          decScore = score - 3;
+        } else {
+          decScore = 0;
+        }
       }
     } else {
       decScore = 0;

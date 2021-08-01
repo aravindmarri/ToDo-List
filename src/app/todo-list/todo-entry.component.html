@@ -1,5 +1,10 @@
 <section class="todo-section" *ngFor="let sc of score | async ; let i=index">
-  <h2>ToDo App</h2>
+  <div class="header-container">
+    <button mat-icon-button class="mat-close absolute" (click)="conformClearDialog()">
+      <mat-icon>clear_all</mat-icon>
+    </button>
+    <h1>ToDo App</h1>
+  </div>
   <div class="progress-container container">
     <div class="progress-circle progress-circle-rounded set-height">
       <div class="progress-circle-number set-height">
@@ -23,7 +28,8 @@
     <div class="progress-data">
       <h4>Weekly report</h4>
       <div class="report-text">
-        <strong>{{sc.tasksDone}} / {{sc.totalTasks}} </strong> <p> Tasks Done</p>
+        <strong>{{sc.tasksDone}} / {{sc["totalTasks"]}} </strong>
+        <p> Tasks Done</p>
       </div>
     </div>
   </div>
@@ -36,7 +42,7 @@
     </div>
   </div>
   <div class="task-container container">
-    <ul class="task-list" >
+    <ul class="task-list">
       <li *ngFor="let item of items; let i=index" class="list-items">
         <div (panleft)="panleft(i)" (panright)="panright(i)"
              [ngStyle]=styleObject(i)
@@ -46,7 +52,8 @@
               <mat-checkbox [ngModel]="item.check" class="task-check" id="check"
                             (click)="checkChange(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal, sc.tasksDone)"></mat-checkbox>
               <div class="name-desc-container" for="check">
-                <p class="task-name strike" style="height: 27px; max-width: 250px; width: auto;" ellipsis>{{ item.name }}</p>
+                <p class="task-name strike" style="height: 27px; max-width: 250px; width: auto;"
+                   ellipsis>{{ item.name }}</p>
                 <p class="task-description" style="max-height: 60px; max-width: 250px; width: auto;" ellipsis
                    ellipsis>{{item.description}}</p>
               </div>
@@ -54,7 +61,8 @@
             <p class="task-date">{{item.date| date: 'dd MMM'}}</p>
           </div>
         </div>
-        <div class="delete-container" mat-ripple (click)="delete(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal)">
+        <div class="delete-container" mat-ripple
+             (click)="delete(i, item.key, item.check, item.compareCheck, sc.key, sc.scoreVal)">
           <div class="delete-icon-holder">
               <span class="material-icons-outlined delete-icon" aria-label="Delete Icon">
               delete
@@ -74,7 +82,7 @@
         <img class="reminder-svg pos-fix" src="assets/arrow.svg" alt="image">
       </div>
       <div class="buttons-container container-padding pos-fix">
-        <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="submit()">
+        <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="openAddTaskDialog()">
           <span class="material-icons-outlined">add_task</span>
         </button>
       </div>

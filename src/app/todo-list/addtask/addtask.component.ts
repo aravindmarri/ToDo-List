@@ -14,14 +14,10 @@ export interface DialogData {
   styleUrls: ['./addtask.component.scss']
 })
 export class AddtaskComponent implements OnInit {
-  @Output() newItemEvent = new EventEmitter<string>();
   constructor(
     public dialogRef: MatDialogRef<AddtaskComponent>,
     @Inject(MAT_DIALOG_DATA) public taskdata: TaskData) {}
-  addTask(): void{
-    // this.addItem(this.name, this.check, this.flagValue);
-    // this.newItemEvent.emit(value);
-  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

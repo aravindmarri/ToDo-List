@@ -1,26 +1,7 @@
-<h1 mat-dialog-title>Please add your Task</h1>
-<div mat-dialog-content>
-  <p>Next To-Do</p>
-  <form (ngSubmit)="addTask()" #newTask="ngForm">
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Name here...</mat-label>
-      <input matInput [(ngModel)]="taskdata.name" id="name"
-             name="name"
-             type="text"
-             required>
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Description here...</mat-label>
-      <input matInput [(ngModel)]="taskdata.description"
-             id="description"
-             name="description"
-             type="text">
-    </mat-form-field>
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="taskdata" [mat-dialog-close]="taskdata" (click)="addTask()"
-          [disabled]="!newTask.form.valid">Add
-  </button>
-</div>
+<h3>
+  Are you sure, you want to erase everything
+</h3>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true">Erase all</button>
+</mat-dialog-actions>

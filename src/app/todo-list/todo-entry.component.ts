@@ -81,8 +81,13 @@ export class TodoEntryComponent implements OnInit {
   conformClearDialog(): void{
     const confomrdialogRef = this.dialog.open(ConformClearComponent, {
       width: '250px',
-      data: {name: this.newTaskName, description: this.newTaskDescription}
+      data: {}
     });
+    confomrdialogRef.afterClosed().subscribe(newData => {
+      this.eraseData(newData.erase);
+    });
+  }
+  eraseData(erase: boolean): void{
   }
   checkChange(index: number, key: string, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number, tasksDone: number): void {
     const checkVal = !isCheck;

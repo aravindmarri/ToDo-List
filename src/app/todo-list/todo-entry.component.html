@@ -1,10 +1,5 @@
 <section class="todo-section" *ngFor="let sc of score | async ; let i=index">
-  <div class="header-container">
-    <button mat-icon-button class="mat-close absolute" (click)="conformClearDialog()">
-      <mat-icon>clear_all</mat-icon>
-    </button>
-    <h1>ToDo App</h1>
-  </div>
+  <h1>ToDo App</h1>
   <div class="progress-container container">
     <div class="progress-circle progress-circle-rounded set-height">
       <div class="progress-circle-number set-height">
@@ -81,10 +76,18 @@
         </div>
         <img class="reminder-svg pos-fix" src="assets/arrow.svg" alt="image">
       </div>
-      <div class="buttons-container container-padding pos-fix">
-        <button class="add-task-button" color="addTask" mat-button mat-raised-button type="submit" (click)="openAddTaskDialog()">
-          <span class="material-icons-outlined">add_task</span>
-        </button>
+      <div>
+        <div class="small-buttons-container pos-fix">
+          <button mat-mini-fab (click)="conformClearDialog()">
+            <mat-icon>clear_all</mat-icon>
+          </button>
+        </div>
+        <div class="buttons-container container-padding pos-fix">
+          <button class="add-task-button" color="addTask" mat-fab type="submit"
+                  (click)="openAddTaskDialog()">
+            <span class="material-icons-outlined">add_task</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

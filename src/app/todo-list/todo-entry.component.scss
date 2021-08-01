@@ -10,16 +10,20 @@ $todo-main: #462255;
   align-items: center;
   height: 100%;
   .header-container{
-    .mat-close{
-      top: 0;
-      right: 0;
-      margin: 14.405px;
+    .button-container{
+      position: relative;
+      .mat-close{
+        top: 0;
+        right: 0;
+        margin: 14.405px;
+      }
     }
+
   }
   .container {
     width: 400px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 25px;
   }
 
@@ -176,16 +180,15 @@ $todo-main: #462255;
           right: 60px;
         }
       }
-
+      .small-buttons-container{
+        padding: 16px 16px 24px 16px ;
+        bottom: 0;
+        right: 88px;
+      }
       .buttons-container {
         padding: 24px;
         bottom: 0;
         right: 0;
-
-        .add-task-button {
-          height: 64px;
-          border-radius: 50%;
-        }
 
         .mat-addTask {
           background-color: $todo-button;
@@ -324,8 +327,12 @@ $todo-main: #462255;
       display: block !important;
     }
   }
+  .small-buttons-container{
+    padding: 16px !important;
+    right: 80px !important;
+  }
   .buttons-container {
-    padding: 16px;
+    padding: 16px !important;
   }
 }
 

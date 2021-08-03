@@ -2,7 +2,7 @@ $todo-background: #ddfff7;
 $todo-border: #93e1d8;
 $todo-lite: #fbc8c3;
 $todo-button: #aa4465;
-$todo-main: #462255;
+  $todo-main: #462255;
 
 .todo-section {
   display: flex;
@@ -183,8 +183,17 @@ $todo-main: #462255;
       .small-buttons-container{
         padding: 16px 16px 24px 16px ;
         bottom: 0;
-        right: 88px;
+        //right: 88px;
+        //-webkit-animation:linear infinite alternate;
+        //-webkit-animation-name: run;
+        //-webkit-animation-duration: 5s;
+        animation-name: run;
+        animation-duration: .4s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
       }
+
       .buttons-container {
         padding: 24px;
         bottom: 0;
@@ -328,12 +337,13 @@ $todo-main: #462255;
     }
   }
   .small-buttons-container{
+    animation-name: run599 !important;
     padding: 16px !important;
-    right: 80px !important;
   }
   .buttons-container {
     padding: 16px !important;
   }
+
 }
 
 @keyframes strike {
@@ -344,7 +354,15 @@ $todo-main: #462255;
     width: 100%;
   }
 }
+@keyframes run {
+  0% { right: 16px;}
+  100%{ right : 88px;}
+}
 
+@keyframes run599 {
+  0% { right: 8px;}
+  100%{ right : 80px;}
+}
 
 .checked {
   .strike {

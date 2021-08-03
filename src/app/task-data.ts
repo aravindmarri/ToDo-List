@@ -7,9 +7,12 @@ export interface TaskData {
   name: string;
 }
 export interface Score {
-  key: string;
+  key: '-MfNAwF9PQQS9-bZftNi';
   lastModifiedDate: Date;
   scoreVal: number;
   tasksDone: number;
   totalTasks: number;
+}
+export interface ButtonVal {
+  value: boolean;
 }

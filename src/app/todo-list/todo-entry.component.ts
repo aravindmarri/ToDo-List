@@ -30,14 +30,16 @@ export class TodoEntryComponent implements OnInit {
   stopDisplayTry = false;
   backTransform = true;
   newTaskName = '';
+  eraseAll = true;
   newTaskDescription = '';
   todayString: string = new Date().toString() ;
   leftIndex = 1000;
   rightIndex = 1000;
   availableTask = false;
+  zeroVal = 0;
   taskVal: Observable<TaskData[]>;
 
-  constructor(db: AngularFireDatabase, public dialog: MatDialog) {
+  constructor(db: AngularFireDatabase, public dialog: MatDialog, public confomrdialogRef: MatDialog) {
     this.taskRef = db.list('Tasks');
     this.scoreRef = db.list('score');
     this.taskRef.snapshotChanges().pipe(
@@ -81,13 +83,17 @@ export class TodoEntryComponent implements OnInit {
   conformClearDialog(): void{
     const confomrdialogRef = this.dialog.open(ConformClearComponent, {
       width: '250px',
-      data: {}
+      data: {eraseAll: this.eraseAll}
     });
     confomrdialogRef.afterClosed().subscribe(newData => {
-      this.eraseData(newData.erase);
+      this.eraseData(newData.eraseAll);
     });
   }
   eraseData(erase: boolean): void{
+    if (erase){
+      this.taskRef.remove();
+      this.zeroScore();
+    }
   }
   checkChange(index: number, key: string, isCheck: boolean, compareCheck: boolean, scoreKey: any, score: number, tasksDone: number): void {
     const checkVal = !isCheck;
@@ -156,17 +162,18 @@ export class TodoEntryComponent implements OnInit {
   }
 
   getDate(lateWeekDate: Date, lastModDate: Date): void {
-    const zeroVal = 0;
     if (lateWeekDate > lastModDate) {
-      this.scoreRef.update(this.scoreKey, {
-        lastModifiedDate: this.todayString,
-        scoreVal: zeroVal,
-        tasksDone: zeroVal,
-         totalTasks: zeroVal
-      }).then();
+      this.zeroScore();
     }
   }
-
+  zeroScore(): void{
+    this.scoreRef.update(this.scoreKey, {
+      lastModifiedDate: this.todayString,
+      scoreVal: this.zeroVal,
+      tasksDone: this.zeroVal,
+      totalTasks: this.zeroVal
+    }).then();
+  }
   panleft(currentIndex: number): void {
     this.leftIndex = currentIndex;
     this.backTransform = true;

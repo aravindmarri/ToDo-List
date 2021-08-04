@@ -218,10 +218,8 @@ $todo-button: #aa4465;
         .item-list {
           transition: transform 0.5s ease-in;
           z-index: 10;
-          cursor: -webkit-grab;
           cursor: grab;
           &:active{
-            cursor: -webkit-grabbing;
             cursor: grabbing;
           }
 

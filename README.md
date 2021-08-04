@@ -1,6 +1,17 @@
-# TodoApp
+# TodoApp 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
+ToDoApp is available on GitHub pages, You can use with below link
+
+### https://aravindmarri.github.io/ToDo-List/
+
+# Project Description 
+
+ToDo App is a small **web app** that is used for storing our upcoming events to remind you and know about the status of the next task and your weekly progress and much more.
+
+
+# Installation 
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
 
 ## Development server
 

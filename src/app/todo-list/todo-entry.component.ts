@@ -36,6 +36,7 @@ export class TodoEntryComponent implements OnInit {
   leftIndex = 1000;
   rightIndex = 1000;
   availableTask = false;
+  eraseFAB = false;
   zeroVal = 0;
   taskVal: Observable<TaskData[]>;
 
@@ -126,9 +127,11 @@ export class TodoEntryComponent implements OnInit {
       if (values[0] === undefined) {
         this.availableTask = false;
         this.displayTry = true;
+        this.eraseFAB = false;
       } else {
         this.availableTask = true;
         this.displayTry = false;
+        this.eraseFAB = true;
       }
     }).then();
    }

@@ -183,15 +183,7 @@ $todo-button: #aa4465;
       .small-buttons-container{
         padding: 16px 16px 24px 16px ;
         bottom: 0;
-        //right: 88px;
-        //-webkit-animation:linear infinite alternate;
-        //-webkit-animation-name: run;
-        //-webkit-animation-duration: 5s;
-        animation-name: run;
-        animation-duration: .4s;
-        animation-timing-function: linear;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
+        right : 88px;
       }
 
       .buttons-container {
@@ -335,7 +327,7 @@ $todo-button: #aa4465;
     }
   }
   .small-buttons-container{
-    animation-name: run599 !important;
+    right : 80px !important;
     padding: 16px !important;
   }
   .buttons-container {
@@ -352,15 +344,7 @@ $todo-button: #aa4465;
     width: 100%;
   }
 }
-@keyframes run {
-  0% { right: 16px;}
-  100%{ right : 88px;}
-}
 
-@keyframes run599 {
-  0% { right: 8px;}
-  100%{ right : 80px;}
-}
 
 .checked {
   .strike {

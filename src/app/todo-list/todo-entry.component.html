@@ -77,8 +77,8 @@
         <img class="reminder-svg pos-fix" src="assets/arrow.svg" alt="image">
       </div>
       <div>
-        <div class="small-buttons-container pos-fix">
-          <button mat-mini-fab (click)="conformClearDialog()">
+        <div class="small-buttons-container pos-fix" >
+          <button mat-mini-fab (click)="conformClearDialog()" *ngIf="eraseFAB">
             <mat-icon>clear_all</mat-icon>
           </button>
         </div>
